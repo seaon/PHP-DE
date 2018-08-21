@@ -1,0 +1,40 @@
+version: "3"
+services:
+  fpm1:
+   image: php:7.2.0-fpm-alpine3.7
+   container_name: fpm1
+   volumes:
+      - /data:/data
+   networks:
+      mywebnet:
+       ipv4_address: 192.138.0.3
+  fpm2:
+   image: php:7.2.0-fpm-alpine3.7
+   container_name: fpm2
+   volumes:
+      - /data:/data
+   networks:
+      mywebnet:
+       ipv4_address: 192.138.0.2
+  
+
+  nginx:
+   image: nginx:1.13.9-alpine
+   container_name: nginx1
+   ports:
+      - 8080:80
+   volumes:
+      - /data:/data
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/conf.d
+   networks:
+      mywebnet:
+       ipv4_address: 192.138.0.4
+
+
+networks:
+  mywebnet:
+     driver: bridge
+     ipam:
+       config: 
+         - subnet: 192.138.0.0/16
