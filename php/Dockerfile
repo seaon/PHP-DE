@@ -13,7 +13,7 @@ RUN curl -L -o /tmp/redis.tar.gz "https://github.com/phpredis/phpredis/archive/$
 	&&  mkdir -p /usr/src/php/ext \
 	&& mv phpredis-$PHPREDIS_VERSION /usr/src/php/ext/redis \
 	&& docker-php-ext-install redis \
-	&& rm -rf /usr/src/php    #如果不删除会增大镜像的大小
+	&& rm -rf /usr/src/php
 
 EXPOSE 9000
 CMD ["php-fpm"]

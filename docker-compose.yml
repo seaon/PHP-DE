@@ -2,12 +2,12 @@ version: "3"
 
 services:
   fpm:
-   image: php:7.2.0-fpm-alpine3.7
+   image: registry.cn-shanghai.aliyuncs.com/seaon/php-fpm:v1
    container_name: fpm
    volumes:
-      - /data:/data
-   networks:
-      - default
+     - /media/sf_seaon/aa:/data
+     - ./php/zzz-docker.conf:/usr/local/etc/php-fpm.d/zzz-docker.conf
+   command: ["php-fpm", "-R"]
 
   nginx:
    image: nginx:1.13.9-alpine
@@ -15,11 +15,7 @@ services:
    ports:
       - 8080:80
    volumes:
-      - /data:/data
+      - /media/sf_seaon/aa:/data
+      - ~/logs:/logs
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx:/etc/nginx/conf.d
-   networks:
-      - default
-
-networks:
-    default:
